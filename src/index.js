@@ -22,7 +22,7 @@ import {
 
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-let camera
+let camera;
 let floor;
 let player;
 let playervAngle = 0;
@@ -36,7 +36,7 @@ const OBSTACLE_MIN_X = -20;
 const OBSTACLE_SPAWN_X = 40;
 
 const JUMP_SPEED = 0.05;
-const JUMP_GRAVITY = 0.1
+const JUMP_GRAVITY = 0.1;
 let jumpPressed = false;
 
 let sky = new Group();
@@ -171,12 +171,12 @@ const spawnObstacle = () => {
     o.position.x = OBSTACLE_SPAWN_X;
     const scale = Math.random() + 1;
     o.scale.multiplyScalar(scale);
-}
+};
 
 const jump = (speed) => {
     playervAngle += speed;
     player.position.y = Math.max(Math.sin(playervAngle) + 1.38, 0.4);
-}
+};
 
 const checkCollisions = () => {
     const playerHitbox = new Box3();
@@ -190,7 +190,7 @@ const checkCollisions = () => {
             return;
         }
     }
-}
+};
 
 const update = (delta) => {
     checkCollisions();
@@ -223,7 +223,7 @@ const animate = () => {
     requestAnimationFrame(animate);
 
     const delta = clock.getDelta();
-    update(delta)
+    update(delta);
     renderer.render(scene, camera);
     controls.update();
 };
@@ -232,7 +232,8 @@ const animate = () => {
 
 const start = () => {
     createPlayer();
-}
+    animate();
+};
 
 const init = () => {
     renderer.render(scene,camera);
@@ -240,10 +241,13 @@ const init = () => {
     const button = document.createElement("dialog");
     button.id = "button-start";
     button.innerHTML = "start";
-    button.addEventListener("click", () => button.close());
+    button.addEventListener("click", () => {
+        button.close();
+        start();
+    });
     document.body.appendChild(button);
     button.showModal();
-}
+};
 init();
 
 
